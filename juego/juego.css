@@ -1,0 +1,86 @@
+/* Fuente divertida y redondeada */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+body {
+    font-family: 'Fredoka One', cursive;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Encabezado */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px #000;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* Preguntas */
+.question {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Botones de respuesta */
+button {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 12px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ff9900;
+    transform: scale(1.05);
+}
+
+/* Resultado final */
+#result {
+    font-size: 1.8rem;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 15px;
+}
+
+/* Imágenes/Símbolos SAM */
+.sam-icon {
+    width: 80px;
+    height: auto;
+    margin: 10px;
+}
+
+/* Respuesta correcta e incorrecta */
+.correct {
+    background-color: #4CAF50 !important;
+    color: white;
+}
+
+.incorrect {
+    background-color: #F44336 !important;
+    color: white;
+}
