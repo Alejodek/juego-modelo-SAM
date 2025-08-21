@@ -53,6 +53,11 @@ const matchRight = [
   { id: "E", text: "E. Posibilidad de refinar la segmentación con más indicaciones." }
 ];
 
+// Sonidos
+const soundCorrect = new Audio("correct.mp3"); // pon un archivo en tu carpeta
+const soundWrong = new Audio("wrong.mp3");     // pon un archivo en tu carpeta
+const soundApplause = new Audio("applause.mp3");
+
 // Función para barajar
 function shuffle(arr){return arr.map(v=>[Math.random(), v]).sort((a,b)=>a[0]-b[0]).map(p=>p[1]);}
 
@@ -62,11 +67,21 @@ function renderMCQ(){
   mcqRoot.innerHTML = "";
   mcqData.forEach((q, qi) => {
     const qBox = document.createElement('div');
+    qBox.classList.add("question");
     qBox.innerHTML = `<h3>${qi+1}. ${q.text}</h3>`;
     const opts = document.createElement('div');
     shuffle(q.options.map((o,i)=>({o,i}))).forEach(({o,i})=>{
       const label = document.createElement('label');
       label.innerHTML = `<input type="radio" name="q${qi}" value="${i}"> ${o}`;
+      label.addEventListener("change",()=>{
+        if(i === q.correctIndex){
+          label.classList.add("correct-anim");
+          soundCorrect.play();
+        } else {
+          label.classList.add("incorrect-anim");
+          soundWrong.play();
+        }
+      });
       opts.appendChild(label);
     });
     qBox.appendChild(opts);
@@ -82,6 +97,7 @@ function renderMatch(){
   tilesRoot.innerHTML = "";
   matchLeft.forEach(item=>{
     const slot = document.createElement('div');
+    slot.className = "slot";
     slot.textContent = item.label;
     slot.dataset.answer = item.answer;
     slot.addEventListener('dragover', e=>e.preventDefault());
@@ -90,11 +106,20 @@ function renderMatch(){
       const id = e.dataTransfer.getData("text/plain");
       const tile = document.querySelector(`[data-id="${id}"]`);
       slot.appendChild(tile);
+      // feedback inmediato
+      if(id === item.answer){
+        slot.classList.add("correct-anim");
+        soundCorrect.play();
+      } else {
+        slot.classList.add("incorrect-anim");
+        soundWrong.play();
+      }
     });
     slotsRoot.appendChild(slot);
   });
   shuffle([...matchRight]).forEach(item=>{
     const tile = document.createElement('div');
+    tile.className = "tile";
     tile.textContent = item.text;
     tile.draggable = true;
     tile.dataset.id = item.id;
@@ -116,7 +141,19 @@ document.getElementById('btnCalificar').addEventListener('click', ()=>{
     const tile = slot.querySelector('[data-id]');
     if(tile && tile.dataset.id === slot.dataset.answer) score++;
   });
-  document.getElementById('score').textContent = `Puntaje: ${score} / 10`;
+
+  let message = "";
+  if(score >= 9){
+    message = "🏆 ¡Eres un experto en SAM! 🎉";
+    soundApplause.play();
+    launchConfetti();
+  } else if(score >= 6){
+    message = "💪 ¡Muy bien! Sigue practicando";
+  } else {
+    message = "😃 ¡Ánimo! Inténtalo de nuevo";
+  }
+
+  document.getElementById('score').textContent = `Puntaje: ${score} / 10 — ${message}`;
 });
 
 // Reiniciar
@@ -124,6 +161,7 @@ document.getElementById('btnReiniciar').addEventListener('click', ()=>{
   renderMCQ();
   renderMatch();
   resetTimer();
+  document.getElementById('score').textContent = "Puntaje: — / 10";
 });
 
 // Mostrar respuestas
@@ -162,6 +200,40 @@ function resetTimer(){
   timeLeft = 300;
   updateTimer();
   startTimer();
+}
+
+// Confeti básico
+function launchConfetti(){
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  let pieces = Array.from({length:150},()=>({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*6+2,
+    c: `hsl(${Math.random()*360},100%,50%)`,
+    s: Math.random()*3+1
+  }));
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+      ctx.fillStyle = p.c;
+      ctx.fill();
+    });
+  }
+  function update(){
+    pieces.forEach(p=>{
+      p.y += p.s;
+      if(p.y>canvas.height){p.y=0;}
+    });
+  }
+  function loop(){
+    draw(); update(); requestAnimationFrame(loop);
+  }
+  loop();
 }
 
 // Inicializar
