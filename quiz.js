@@ -15,20 +15,27 @@ const mcqData = [
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 let box = 20;
-let snake = [{x:9*box, y:10*box}];
-let direction;
-let food = {x:Math.floor(Math.random()*20)*box, y:Math.floor(Math.random()*20)*box};
-let score=0;
-let eaten=0; // cuenta manzanas para preguntas
-let game;
-let lives=3;
+let snake, direction, food, score, eaten, game, lives;
 
-// sonidos (puedes cambiarlos por archivos locales correct.mp3, wrong.mp3, gameover.mp3)
+// sonidos (puedes cambiarlos por archivos locales)
 const soundCorrect=new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_70b95f01a4.mp3?filename=correct-2-46134.mp3");
 const soundWrong=new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_4443e0da1d.mp3?filename=error-2-46134.mp3");
 const soundGameOver=new Audio("https://cdn.pixabay.com/download/audio/2021/09/28/audio_0e5cf72e57.mp3?filename=game-over-arcade-6435.mp3");
 
-// Control
+// Inicializar juego
+function initGame(){
+  snake = [{x:9*box, y:10*box}];
+  direction = null;
+  food = {x:Math.floor(Math.random()*20)*box, y:Math.floor(Math.random()*20)*box};
+  score = 0;
+  eaten = 0;
+  lives = 3;
+  document.getElementById("score").textContent="Puntaje: 0";
+  document.getElementById("lives").textContent="❤️❤️❤️";
+  clearInterval(game);
+  game=setInterval(draw,150);
+}
+
 document.addEventListener("keydown",dir);
 function dir(e){
   if(e.key==="ArrowLeft" && direction!=="RIGHT") direction="LEFT";
@@ -37,9 +44,27 @@ function dir(e){
   else if(e.key==="ArrowDown" && direction!=="UP") direction="DOWN";
 }
 
+// Dibujar cuadrícula
+function drawGrid(){
+  ctx.strokeStyle="#1f2d44";
+  for(let x=0;x<canvas.width;x+=box){
+    ctx.beginPath();
+    ctx.moveTo(x,0);
+    ctx.lineTo(x,canvas.height);
+    ctx.stroke();
+  }
+  for(let y=0;y<canvas.height;y+=box){
+    ctx.beginPath();
+    ctx.moveTo(0,y);
+    ctx.lineTo(canvas.width,y);
+    ctx.stroke();
+  }
+}
+
 // Dibujar juego
 function draw(){
   ctx.clearRect(0,0,400,400);
+  drawGrid();
 
   // dibuja snake
   for(let i=0;i<snake.length;i++){
@@ -83,7 +108,6 @@ function draw(){
   snake.unshift(newHead);
 }
 function collision(head,array){return array.some(seg=>seg.x===head.x && seg.y===head.y);}
-game=setInterval(draw,150);
 
 // ======================
 // Modal Preguntas
@@ -104,12 +128,12 @@ function showQuestion(){
       if(i===q.correct){
         btn.className="correct";
         soundCorrect.play();
-        setTimeout(()=>{quizModal.style.display="none"; game=setInterval(draw,150);},1000);
+        setTimeout(()=>{quizModal.style.display="none"; game=setInterval(draw,150);},800);
       } else {
         btn.className="incorrect";
         soundWrong.play();
         loseLife();
-        setTimeout(()=>{quizModal.style.display="none"; game=setInterval(draw,150);},1000);
+        setTimeout(()=>{quizModal.style.display="none"; game=setInterval(draw,150);},800);
       }
     };
     qOpts.appendChild(btn);
@@ -131,6 +155,10 @@ function loseLife(){
 function endGame(){
   clearInterval(game);
   soundGameOver.play();
-  alert("¡Game Over! Tu puntaje fue: "+score);
-  location.reload();
+  setTimeout(()=>{initGame();},1500); // reinicia automáticamente
 }
+
+// ======================
+// Iniciar juego
+// ======================
+initGame();

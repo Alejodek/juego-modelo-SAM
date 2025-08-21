@@ -9,77 +9,77 @@ body {
 }
 
 h1 {
-  margin:10px;
+    margin:10px;
 }
 
 canvas {
-  background:#14213d;
-  border:3px solid #fca311;
+    background:#14213d;
+    border:3px solid #fca311;
 }
 
 #score {
-  margin:10px;
-  font-size:20px;
+    margin:10px;
+    font-size:20px;
 }
 
 #lives {
-  font-size:24px;
-  margin-bottom:10px;
+    font-size:24px;
+    margin-bottom:10px;
 }
 
 /* Modal de preguntas */
 #quizModal {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display:none;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-  z-index:10;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:none;
+    background:rgba(0,0,0,0.85);
+    justify-content:center;
+    align-items:center;
+    z-index:10;
 }
 
 .modal-content {
-  background:white;
-  color:black;
-  padding:20px;
-  border-radius:15px;
-  width:80%;
-  max-width:500px;
-  text-align:center;
-  animation:pop 0.5s;
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:15px;
+    width:80%;
+    max-width:500px;
+    text-align:center;
+    animation:pop 0.5s;
 }
 
 button {
-  margin:8px;
-  padding:12px 20px;
-  font-size:16px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
+    margin:8px;
+    padding:12px 20px;
+    font-size:16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
 }
 
 .correct {
-  background:#4caf50;
-  color:white;
+    background:#4caf50;
+    color:white;
 }
 
 .incorrect {
-  background:#f44336;
-  color:white;
+    background:#f44336;
+    color:white;
 }
 
 @keyframes pop {
-  0% {transform:scale(0.5);}
-  100% {transform:scale(1);}
+    0% {transform:scale(0.5);}
+    100% {transform:scale(1);}
 }
 
 .blink {
-  animation:blink 0.5s 3;
+    animation:blink 0.5s 3;
 }
 
 @keyframes blink {
-  50% {opacity:0;}
+    50% {opacity:0;}
 }
