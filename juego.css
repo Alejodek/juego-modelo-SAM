@@ -1,114 +1,85 @@
-/* Fuente divertida y redondeada */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
-
 body {
-    font-family: 'Fredoka One', cursive;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    text-align: center;
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    background:#0d1b2a;
+    color:white;
+    font-family:"Comic Sans MS", cursive;
 }
 
-/* Contenedor principal */
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Encabezado */
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px #000;
+  margin:10px;
 }
 
-p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
+canvas {
+  background:#14213d;
+  border:3px solid #fca311;
 }
 
-/* Preguntas */
-.question {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 15px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+#score {
+  margin:10px;
+  font-size:20px;
 }
 
-/* Botones de respuesta */
+#lives {
+  font-size:24px;
+  margin-bottom:10px;
+}
+
+/* Modal de preguntas */
+#quizModal {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:none;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+}
+
+.modal-content {
+  background:white;
+  color:black;
+  padding:20px;
+  border-radius:15px;
+  width:80%;
+  max-width:500px;
+  text-align:center;
+  animation:pop 0.5s;
+}
+
 button {
-    display: block;
-    width: 90%;
-    margin: 10px auto;
-    padding: 12px;
-    background-color: #ffcc00;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    color: #333;
-    transition: transform 0.2s, background-color 0.3s;
+  margin:8px;
+  padding:12px 20px;
+  font-size:16px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
 }
 
-button:hover {
-    background-color: #ff9900;
-    transform: scale(1.05);
-}
-
-/* Resultado final */
-#result {
-    font-size: 1.8rem;
-    margin-top: 20px;
-    padding: 15px;
-    background-color: rgba(0,0,0,0.3);
-    border-radius: 15px;
-}
-
-/* Imágenes/Símbolos SAM */
-.sam-icon {
-    width: 80px;
-    height: auto;
-    margin: 10px;
-}
-
-/* Respuesta correcta e incorrecta */
 .correct {
-    background-color: #4CAF50 !important;
-    color: white;
+  background:#4caf50;
+  color:white;
 }
 
 .incorrect {
-    background-color: #F44336 !important;
-    color: white;
+  background:#f44336;
+  color:white;
 }
 
-/* Animaciones para feedback */
-.correct-anim {
-    background-color: #4CAF50 !important;
-    animation: bounce 0.6s;
-    color: white;
-}
-.incorrect-anim {
-    background-color: #F44336 !important;
-    animation: shake 0.4s;
-    color: white;
+@keyframes pop {
+  0% {transform:scale(0.5);}
+  100% {transform:scale(1);}
 }
 
-/* Rebote */
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-10px);}
-    60% {transform: translateY(-5px);}
+.blink {
+  animation:blink 0.5s 3;
 }
 
-/* Sacudida */
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
+@keyframes blink {
+  50% {opacity:0;}
 }

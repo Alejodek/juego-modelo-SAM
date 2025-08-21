@@ -1,76 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Juego SAM: Segment Anything Model</title>
-<link rel="stylesheet" href="juego.css">
+<title>Snake SAM Quiz Arcade</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<canvas id="confetti"></canvas>
+  <h1>🐍 Snake SAM Quiz Arcade</h1>
+  <div id="lives">❤️❤️❤️</div>
+  <canvas id="game" width="400" height="400"></canvas>
+  <div id="score">Puntaje: 0</div>
 
-<div class="wrap">
-  <header>
-    <div class="brand">
-      <svg viewBox="0 0 120 120">
-        <defs>
-          <linearGradient id="g1" x1="0" x2="1">
-            <stop offset="0" stop-color="#22b3ff"/>
-            <stop offset="1" stop-color="#5cf2ff"/>
-          </linearGradient>
-          <linearGradient id="g2" x1="0" x2="1">
-            <stop offset="0" stop-color="#ffd166"/>
-            <stop offset="1" stop-color="#f7ff7a"/>
-          </linearGradient>
-        </defs>
-        <rect x="8" y="26" rx="10" ry="10" width="104" height="70" fill="url(#g1)" />
-        <circle cx="60" cy="61" r="20" fill="#0b1020"/>
-        <circle cx="60" cy="61" r="12" fill="url(#g2)"/>
-        <rect x="18" y="16" rx="6" ry="6" width="38" height="12" fill="#18f0a9"/>
-        <rect x="20" y="28" width="80" height="66" fill="none" stroke="#95f985" stroke-width="3" stroke-dasharray="6 6"/>
-        <path d="M40 70 Q60 40 80 70" fill="none" stroke="#ffd166" stroke-width="4" stroke-linecap="round"/>
-      </svg>
-      <div>
-        <h1>Juego SAM — Segment Anything Model</h1>
-        <div class="subtitle">Aprende y juega sobre el modelo SAM</div>
-        <div class="timer-container">
-          ⏳ Tiempo: <span id="timer">05:00</span>
-        </div>
-        <div class="progress-bar">
-          <div id="progress"></div>
-        </div>
-      </div>
+  <!-- Modal para preguntas -->
+  <div id="quizModal">
+    <div class="modal-content">
+      <h2 id="questionText"></h2>
+      <div id="options"></div>
     </div>
-  </header>
+  </div>
 
-  <section class="card">
-    <h2>🧠 Preguntas de opción múltiple</h2>
-    <div id="mcq"></div>
-  </section>
-
-  <section class="card">
-    <h2>🔗 Emparejamiento</h2>
-    <div class="match-board">
-      <div class="match-col">
-        <h3>Columna A</h3>
-        <div id="slots"></div>
-      </div>
-      <div class="match-col">
-        <h3>Columna B</h3>
-        <div id="tiles"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="card">
-    <button id="btnCalificar">✅ Calificar</button>
-    <button id="btnReiniciar">🔄 Reiniciar</button>
-    <button id="btnMostrarRespuestas">💡 Mostrar respuestas</button>
-    <div id="score">Puntaje: — / 10</div>
-  </section>
-</div>
-
-<script src="quiz.js"></script>
+<script src="game.js"></script>
 </body>
 </html>
-
